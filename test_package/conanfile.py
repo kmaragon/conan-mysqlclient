@@ -23,4 +23,4 @@ class MySQLClientTestPackageConan(ConanFile):
         self.copy(pattern="*.dylib", dst="bin", src="lib")
 
     def test(self):
-        self.run(os.sep.join([".","bin", "version"]))
+	self.run('cd bin && ./version')
