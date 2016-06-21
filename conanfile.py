@@ -32,6 +32,7 @@ class MySQLClientConan(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include", src="mysqlclient/include")
+	self.copy("*.h", dst="include", src="mysqlclient/build/include")
         self.copy("*.so", dst="lib", src="mysqlclient/build/lib")
 	self.copy("*.dylib", dst="lib", src="mysqlclient/build/libmysql")
         self.copy("*.a", dst="lib", src="mysqlclient/build/lib")
