@@ -14,16 +14,16 @@ class MySQLClientConan(ConanFile):
     generators = "cmake", "txt"
 
     def source(self):
-	tar_file = "mysql-connector-c-%s-src.tar.gz" % self.version 
-	if self.settings.os == "Linux" or self.settings.os == "Macos":
-		download("http://dev.mysql.com/get/Downloads/Connector-C/%s" % tar_file, tar_file)
-	else:
-		download("http://dev.mysql.com/get/Downloads/Connector-C/")
-	unzip(tar_file)
-	shutil.move("mysql-connector-c-%s-src" % self.version, "mysqlclient")
-	os.unlink(tar_file)
-	shutil.move("mysqlclient/CMakeLists.txt", "mysqlclient/CMakeListsOriginal.cmake")
-	shutil.move("CMakeLists.txt", "mysqlclient/CMakeLists.txt")
+        tar_file = "mysql-connector-c-%s-src.tar.gz" % self.version 
+        if self.settings.os == "Linux" or self.settings.os == "Macos":
+            download("http://dev.mysql.com/get/Downloads/Connector-C/%s" % tar_file, tar_file)
+        else:
+            download("http://dev.mysql.com/get/Downloads/Connector-C/")
+        unzip(tar_file)
+        shutil.move("mysql-connector-c-%s-src" % self.version, "mysqlclient")
+        os.unlink(tar_file)
+        shutil.move("mysqlclient/CMakeLists.txt", "mysqlclient/CMakeListsOriginal.cmake")
+        shutil.move("CMakeLists.txt", "mysqlclient/CMakeLists.txt")
 
     def build(self):
         cmake = CMake(self.settings)
@@ -32,9 +32,9 @@ class MySQLClientConan(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include", src="mysqlclient/include")
-	self.copy("*.h", dst="include", src="mysqlclient/build/include")
+        self.copy("*.h", dst="include", src="mysqlclient/build/include")
         self.copy("*.so", dst="lib", src="mysqlclient/build/lib")
-	self.copy("*.dylib", dst="lib", src="mysqlclient/build/libmysql")
+        self.copy("*.dylib", dst="lib", src="mysqlclient/build/libmysql")
         self.copy("*.a", dst="lib", src="mysqlclient/build/lib")
 
     def package_info(self):
