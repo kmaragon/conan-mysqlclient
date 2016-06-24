@@ -54,10 +54,12 @@ class MySQLClientConan(ConanFile):
             self.copy("*.a", dst="lib", src="mysqlclient/build", keep_path=False)
 
     def package_info(self):
-        if self.options.shared:
+        if self.settings.os == "Windows" and self.options.shared:
             self.cpp_info.libs = ["libmysql"]
         else:
             self.cpp_info.libs = ["mysqlclient"]
+        if self.settings.os == "Linux" and not self.options.shared:
+            self.cpp_info.libs.extend(["dl", "pthread"])
 
     def conan_info(self):
         if self.info.settings.compiler == "Visual Studio":
