@@ -9,12 +9,16 @@ environment:
     CONAN_USERNAME: "hklabbers"
     CONAN_CHANNEL: "ci"
     CONAN_TOTAL_PAGES: 4
+    CONAN_VISUAL_VERSIONS: 12
+    CONAN_VISUAL_RUNTIMES: "MT,MD"
     
     matrix:
         - CONAN_CURRENT_PAGE: 1
         - CONAN_CURRENT_PAGE: 2  
         - CONAN_CURRENT_PAGE: 3
         - CONAN_CURRENT_PAGE: 4
+
+image: Visual Studio 2012
 
 install:
   - set PATH=%PATH%;%PYTHON%/Scripts/
