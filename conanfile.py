@@ -22,6 +22,8 @@ class MySQLClientConan(ConanFile):
         if self.settings.compiler == "Visual Studio" and not self.options.shared:
             if "MD" in str(self.settings.compiler.runtime):
                 raise Exception("Cannot use MD in mysql static library, use MT")
+            elif self.settings.compiler.version != 12:
+                raise Exception("MySQLClient static library will not work with VS versions != 12")
 
     def source(self):
         tar_file = "mysql-connector-c-%s-src.tar.gz" % self.version 
