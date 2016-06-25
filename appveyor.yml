@@ -8,15 +8,13 @@ environment:
     CONAN_REFERENCE: "mysqlclient/6.1.6"
     CONAN_USERNAME: "hklabbers"
     CONAN_CHANNEL: "ci"
-    CONAN_TOTAL_PAGES: 4
+    CONAN_TOTAL_PAGES: 2
     CONAN_VISUAL_VERSIONS: 12
-    CONAN_VISUAL_RUNTIMES: "MT,MD"
+    CONAN_VISUAL_RUNTIMES: "MT"
     
     matrix:
         - CONAN_CURRENT_PAGE: 1
         - CONAN_CURRENT_PAGE: 2  
-        - CONAN_CURRENT_PAGE: 3
-        - CONAN_CURRENT_PAGE: 4
 
 install:
   - set PATH=%PATH%;%PYTHON%/Scripts/
