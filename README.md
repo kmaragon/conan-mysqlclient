@@ -44,6 +44,6 @@ Complete the installation of requirements for your project running:</small></spa
 Project setup installs the library (and all his dependencies) and generates the files *conanbuildinfo.txt* and *conanbuildinfo.cmake* with all the paths and variables that you need to link with your dependencies.
 
 ## Issues
-This package doesn't compile with gcc 4.6 due to an issue with glibc compatability.
+This package doesn't compile with gcc 4.6 due to an issue with glibc compatibility.
 
-This package can only cmpiled with VS 12 on windows.
+This package can only be compiled with VS 12 on windows.

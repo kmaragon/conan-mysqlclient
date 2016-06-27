@@ -5,7 +5,7 @@ sudo: required
 language: python
 env:
   global:
-    - CONAN_UPLOAD=0
+    - CONAN_UPLOAD=1
     - CONAN_REFERENCE="mysqlclient/6.1.6"
     - CONAN_USERNAME="hklabbers"
     - CONAN_CHANNEL="ci"
