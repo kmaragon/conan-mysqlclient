@@ -11,7 +11,7 @@ class MySQLClientConan(ConanFile):
     license = "GPL v2"
     author = "Hans Klabbers (hklabbers@yahoo.com)"
     generators = "cmake"
-    exports = "CMakeLists.txt"
+    exports = "CMakeLists.txt", "FindMySQL.cmake"
     options = {"shared": [True, False]}
     default_options = "shared=False"
 
@@ -42,6 +42,9 @@ class MySQLClientConan(ConanFile):
         self.run("cd mysqlclient/build && cmake --build . %s" % cmake.build_config)
 
     def package(self):
+        # Copy findMySQL.cmake to package
+        self.copy("FindMySQL.cmake", ".", ".")
+        
         self.copy("*.h", dst="include", src="mysqlclient/include")
         self.copy("*.h", dst="include", src="mysqlclient/build/include")
         if self.options.shared:
