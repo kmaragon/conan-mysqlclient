@@ -5,7 +5,7 @@ environment:
     PYTHON_ARCH: "32"
     
     CONAN_UPLOAD: 1
-    CONAN_REFERENCE: "mysqlclient/6.1.6"
+    CONAN_REFERENCE: "MySQLClient/6.1.6"
     CONAN_USERNAME: "hklabbers"
     CONAN_CHANNEL: "ci"
     CONAN_TOTAL_PAGES: 2
