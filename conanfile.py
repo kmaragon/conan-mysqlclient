@@ -7,13 +7,17 @@ class MySQLClientConan(ConanFile):
     name = "MySQLClient"
     version = "6.1.6"
     settings = "os", "compiler", "build_type", "arch"
-    url = "https://github.com/hklabbers/conan-mysqlclient.git"
+    url = "https://github.com/kmaragon/conan-mysqlclient.git"
     license = "GPL v2"
     author = "Hans Klabbers (hklabbers@yahoo.com)"
     generators = "cmake"
     exports = "CMakeLists.txt", "FindMySQL.cmake"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {
+            "shared": [True, False],
+            "reentrant": [True, False]
+    }
+    default_options = "shared=False", "reentrant=False"
+    description = "Fork of MySqlClient from Hans Klabbers with reentrant support that doesn't break on shared=True"
 
     def config(self):
         if not hasattr(self, "_count_configs"):
@@ -48,19 +52,23 @@ class MySQLClientConan(ConanFile):
         self.copy("*.h", dst="include", src="mysqlclient/include")
         self.copy("*.h", dst="include", src="mysqlclient/build/include")
         if self.options.shared:
-            self.copy("*.so", dst="lib", src="mysqlclient/build", keep_path=False)  
-            self.copy("*mysql.lib", dst="lib", src="mysqlclient/build", keep_path=False)  
-            self.copy("*.dll", dst="bin", src="mysqlclient/build", keep_path=False)
-            self.copy("*.dylib", dst="lib", src="mysqlclient/build", keep_path=False)
+            self.copy("*.so*", dst="lib", src="mysqlclient/build", keep_path=False, links=True)  
+            self.copy("*mysql.lib", dst="lib", src="mysqlclient/build", keep_path=False, links=True)  
+            self.copy("*.dll", dst="bin", src="mysqlclient/build", keep_path=False, links=True)
+            self.copy("*.dylib*", dst="lib", src="mysqlclient/build", keep_path=False, links=True)
         else:
-            self.copy("*.lib", dst="lib", src="mysqlclient/build", keep_path=False)
-            self.copy("*.a", dst="lib", src="mysqlclient/build", keep_path=False)
+            self.copy("*.lib", dst="lib", src="mysqlclient/build", keep_path=False, links=True)
+            self.copy("*.a", dst="lib", src="mysqlclient/build", keep_path=False, links=True)
 
     def package_info(self):
+        suffix = ""
+        if self.options.reentrant:
+            suffix = "_r"
+
         if self.settings.os == "Windows" and self.options.shared:
-            self.cpp_info.libs = ["libmysql"]
+            self.cpp_info.libs = ["libmysql" + suffix]
         else:
-            self.cpp_info.libs = ["mysqlclient"]
+            self.cpp_info.libs = ["mysqlclient" + suffix]
         if self.settings.os == "Linux" and not self.options.shared:
             self.cpp_info.libs.extend(["dl", "pthread"])
 

@@ -1,7 +1,7 @@
 from conans import ConanFile, CMake
 import os
 
-default_user = "hklabbers"
+default_user = "kmaragon"
 default_channel = "testing"
 
 # This easily allows to copy the package in other user or channel
@@ -12,6 +12,10 @@ class MySQLClientTestPackageConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     requires = "MySQLClient/6.1.6@%s/%s" % (username, channel)
     generators = "cmake"
+
+    def configure(self):
+        self.options["MySQLClient"].shared = True
+        self.options["MySQLClient"].reentrant = True
 
     def build(self):
         cmake = CMake(self.settings)
