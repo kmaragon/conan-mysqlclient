@@ -49,8 +49,9 @@ class MySQLClientConan(ConanFile):
         # Copy findMySQL.cmake to package
         self.copy("FindMySQL.cmake", ".", ".")
         
-        self.copy("*.h", dst="include/mysql", src="mysqlclient/include")
-        self.copy("*.h", dst="include/mysql", src="mysqlclient/build/include")
+        self.copy("*.h", dst="include/mysql", src="mysqlclient/include/mysql", links=True)
+        self.copy("*.h", dst="include/mysql", src="mysqlclient/include", links=True)
+        self.copy("*.h", dst="include/mysql", src="mysqlclient/build/include", links=True)
         if self.options.shared:
             self.copy("*.so*", dst="lib", src="mysqlclient/build", keep_path=False, links=True)  
             self.copy("*mysql.lib", dst="lib", src="mysqlclient/build", keep_path=False, links=True)  
